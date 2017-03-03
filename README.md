@@ -9,4 +9,4 @@ Input data is curated on openICPSR:
  - Cornell National Social Survey Data: http://doi.org/10.3886/E100424V2
  - National Health Interview Survey Data: http://doi.org/10.3886/E100425V1
  
- This will be archived on Zenodo.
+This is archived on Zenodo, see https://doi.org/10.5281/zenodo.345385 for the v20170203 release.
