@@ -1,0 +1,19 @@
+The IHIS data should be cited as
+  @TECHREPORT{IHIS:2016,
+    author = {{Minnesota Population Center and State Health Access Data Assistance Center}},
+    title = {{Integrated Health Interview Series:  Version 6.21}},
+    institution = {{University of Minnesota}},
+    year = {2016},
+    type = {[Computer file]},
+    howpublished = {Computer file},
+    date={September 30, 2016},
+    url={http://ihis.us/}
+    }
+
+
+Schmutte Ian; Economics of Privacy -- Raw National Health Interview Survey Data. Ann Arbor, MI: Inter-university Consortium for Political and Social Research [distributor], http://doi.org/10.3886/E100425V1
+
+Persistent URL: http://doi.org/10.3886/E100425V1
+
+
+

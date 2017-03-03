@@ -1,0 +1,55 @@
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2016 The MathWorks, Inc.
+                   R2016b (9.1.0.441655) 64-bit (glnxa64)
+                             September 7, 2016
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+
+epsilon_best =
+
+    0.0442
+
+
+alpha_best =
+
+    0.1380
+
+
+I_best =
+
+    0.8620
+
+
+T_best =
+
+     3.158720177244290e+03
+
+T_best=3.158720e+03
+epsilon_dev =
+
+   0.022081843229706
+
+
+alpha_dev =
+
+   0.173830116757785
+
+
+I_dev =
+
+   0.826169883242215
+
+
+T_dev =
+
+     1.989869021018873e+03
+
+
+welfare_change_avg =
+
+  -0.013380867903691
+

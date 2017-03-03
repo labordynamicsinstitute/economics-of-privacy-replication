@@ -1,0 +1,378 @@
+---------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  H:\space\schmutte\Documents\research\repository\economics-of-privacy\programs\v2014October\polychor_analysis.log
+  log type:  text
+ opened on:   5 Nov 2014, 11:19:09
+
+. 
+.         pause on
+
+.         set more off
+
+.         clear all
+
+.         set linesize 200
+
+.         set matsize 5000
+
+.         #delimit ;
+delimiter now ;
+. *******************************;
+. /*Read data*/
+>         import delimited "../../data/raw_cnss/All/all0813-edited.csv";
+(443 vars, 6000 obs)
+. /*give variables mnemonic names (and transform to be increasing rather than decreasing where relevant)*/
+>     gen life_sat          = -1*jabq1+5;
+(5000 missing values generated)
+
+.     gen gov_priv          = -1*jabq2+5;
+(5000 missing values generated)
+
+.     gen gov_accu          = -1*jabq3+4;
+(5000 missing values generated)
+
+.     gen health_share_qual = -1*jaq4+6;
+(3000 missing values generated)
+
+.         gen health_share_priv = -1*jaq5+6;
+(3000 missing values generated)
+
+.         gen health_rating     = -1*jaq6+6;
+(3000 missing values generated)
+
+.         gen inc_cat = .;
+(6000 missing values generated)
+
+.         replace inc_cat = hhinc if hhinc<88;
+(4800 real changes made)
+
+.         replace gov_priv = . if jabq2 >=5;
+(2 real changes made, 2 to missing)
+
+.         replace gov_accu = . if jabq3 >=5;
+(3 real changes made, 3 to missing)
+
+.         replace health_share_qual = . if jaq4 >=6;
+(72 real changes made, 72 to missing)
+
+.         replace health_share_priv = . if jaq5 >=6;
+(123 real changes made, 123 to missing)
+
+.         replace health_rating = . if jaq6 >=6;
+(2 real changes made, 2 to missing)
+
+. /*descriptive statistics*/
+>     tab inc_cat;
+
+    inc_cat |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        145        3.02        3.02
+          2 |        322        6.71        9.73
+          3 |        375        7.81       17.54
+          4 |        372        7.75       25.29
+          5 |        542       11.29       36.58
+          6 |      1,182       24.63       61.21
+          7 |        623       12.98       74.19
+          8 |        623       12.98       87.17
+          9 |        616       12.83      100.00
+------------+-----------------------------------
+      Total |      4,800      100.00
+
+.     tab jabq1;
+
+      jabq1 |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        532       53.20       53.20
+          2 |        393       39.30       92.50
+          3 |         51        5.10       97.60
+          4 |         24        2.40      100.00
+------------+-----------------------------------
+      Total |      1,000      100.00
+
+.                 tab jabq2;
+
+      jabq2 |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        327       32.70       32.70
+          2 |        381       38.10       70.80
+          3 |        172       17.20       88.00
+          4 |        118       11.80       99.80
+          8 |          1        0.10       99.90
+          9 |          1        0.10      100.00
+------------+-----------------------------------
+      Total |      1,000      100.00
+
+.         tab jabq3;
+
+      jabq3 |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        158       15.80       15.80
+          2 |        519       51.90       67.70
+          3 |        320       32.00       99.70
+          8 |          3        0.30      100.00
+------------+-----------------------------------
+      Total |      1,000      100.00
+
+.                 tab jaq4;
+
+       jaq4 |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |      1,264       42.13       42.13
+          2 |        919       30.63       72.77
+          3 |        551       18.37       91.13
+          4 |        103        3.43       94.57
+          5 |         91        3.03       97.60
+          8 |         70        2.33       99.93
+          9 |          2        0.07      100.00
+------------+-----------------------------------
+      Total |      3,000      100.00
+
+.         tab jaq5;
+
+       jaq5 |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        175        5.83        5.83
+          2 |        323       10.77       16.60
+          3 |      1,025       34.17       50.77
+          4 |        864       28.80       79.57
+          5 |        490       16.33       95.90
+          8 |        113        3.77       99.67
+          9 |         10        0.33      100.00
+------------+-----------------------------------
+      Total |      3,000      100.00
+
+.         tab jaq6;
+
+       jaq6 |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        699       23.30       23.30
+          2 |      1,125       37.50       60.80
+          3 |        778       25.93       86.73
+          4 |        296        9.87       96.60
+          5 |        100        3.33       99.93
+          9 |          2        0.07      100.00
+------------+-----------------------------------
+      Total |      3,000      100.00
+
+.     polychoric inc_cat health_share_qual health_share_priv health_rating if year == 2011;
+
+Polychoric correlation matrix
+
+                             inc_cat  health_share_qual  health_share_priv      health_rating
+          inc_cat                  1
+health_share_qual          .19157744                  1
+health_share_priv          .01821632          .30357865                  1
+    health_rating          .28559195          .13461152          .02027958                  1
+
+.         ret li;
+
+scalars:
+               r(pLR0) =  .5844812357913107
+                r(LR0) =  .2990458030162699
+                r(pX2) =  .4108594311410755
+               r(dfX2) =  15
+                 r(X2) =  15.57479484361364
+                r(pG2) =  .3934012577247885
+               r(dfG2) =  15
+                 r(G2) =  15.83056096011569
+             r(se_rho) =  .0377883688686807
+                r(rho) =  .0202795789672482
+                  r(N) =  898
+              r(sum_w) =  898
+
+macros:
+               r(type) : "polychoric"
+
+matrices:
+                  r(R) :  4 x 4
+
+.         sum inc_cat health_share_qual health_share_priv health_rating if year == 2011;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     inc_cat |       959    5.771637    2.276087          1          9
+health_sha~l |       969    4.145511    .9493816          1          5
+health_sha~v |       942    2.612527    1.086861          1          5
+health_rat~g |      1000       3.689     1.02339          1          5
+
+.                 polychoric inc_cat health_share_qual health_share_priv health_rating if year == 2012;
+
+Polychoric correlation matrix
+
+                             inc_cat  health_share_qual  health_share_priv      health_rating
+          inc_cat                  1
+health_share_qual          .19968501                  1
+health_share_priv          .07382763          .27043715                  1
+    health_rating          .26983466          .04155683          .00516946                  1
+
+.         ret li;
+
+scalars:
+               r(pLR0) =  .8901817635299061
+                r(LR0) =  .0190644890171825
+                r(pX2) =  .9609391523330525
+               r(dfX2) =  15
+                 r(X2) =  6.878301122293104
+                r(pG2) =  .959627350225254
+               r(dfG2) =  15
+                 r(G2) =  6.927613162602938
+             r(se_rho) =  .0380190351451107
+                r(rho) =  .0051694627064336
+                  r(N) =  897
+              r(sum_w) =  897
+
+macros:
+               r(type) : "polychoric"
+
+matrices:
+                  r(R) :  4 x 4
+
+.         sum inc_cat health_share_qual health_share_priv health_rating if year == 2012;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     inc_cat |       969    5.762642    2.108476          1          9
+health_sha~l |       960    4.015625    1.038752          1          5
+health_sha~v |       939    2.561235    1.049535          1          5
+health_rat~g |      1000       3.691    1.052914          1          5
+
+.         polychoric inc_cat life_sat gov_priv gov_accu health_share_qual health_share_priv health_rating  if year==2013;
+
+Polychoric correlation matrix
+
+                             inc_cat           life_sat           gov_priv           gov_accu  health_share_qual  health_share_priv      health_rating
+          inc_cat                  1
+         life_sat          .25772423                  1
+         gov_priv         -.04878459          .04821351                  1
+         gov_accu         -.00905929          .00820344           .0016298                  1
+health_share_qual          .14473788          .08016405         -.05915973          .02497149                  1
+health_share_priv         -.05902557          .04606401         -.08374688          .10127459          .30368534                  1
+    health_rating          .27615092          .30673056          .03303634          .02965641          .06273272         -.00152167                  1
+
+.         ret li;
+
+scalars:
+               r(pLR0) =  .9658039476827356
+                r(LR0) =  .0018379676503173
+                r(pX2) =  .0345634998312443
+               r(dfX2) =  15
+                 r(X2) =  26.34349930802143
+                r(pG2) =  .0085730992193975
+               r(dfG2) =  15
+                 r(G2) =  31.07914713880928
+             r(se_rho) =  .0365846392170252
+                r(rho) =  -.001521666855477
+                  r(N) =  978
+              r(sum_w) =  978
+
+macros:
+               r(type) : "polychoric"
+
+matrices:
+                  r(R) :  7 x 7
+
+.         sum inc_cat life_sat gov_priv gov_accu health_share_qual health_share_priv health_rating  if year==2013;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     inc_cat |       990    5.849495    2.205007          1          9
+    life_sat |      1000       3.433    .7014293          1          4
+    gov_priv |       998    2.918838    .9835283          1          4
+    gov_accu |       997    1.837513    .6734174          1          3
+health_sha~l |       999    4.078078    1.055527          1          5
+-------------+--------------------------------------------------------
+health_sha~v |       996    2.604418    1.109185          1          5
+health_rat~g |       998    3.648297    1.046344          1          5
+
+.                 polychoric inc_cat health_share_qual health_share_priv health_rating;
+
+Polychoric correlation matrix
+
+                             inc_cat  health_share_qual  health_share_priv      health_rating
+          inc_cat                  1
+health_share_qual          .17740568                  1
+health_share_priv          .00751993          .29348839                  1
+    health_rating          .27716204          .07644375          .00642282                  1
+
+.         ret li;
+
+scalars:
+               r(pLR0) =  .7610847319598816
+                r(LR0) =  .0924504468057421
+                r(pX2) =  .0189927704583652
+               r(dfX2) =  15
+                 r(X2) =  28.43619176035921
+                r(pG2) =  .0168294561382452
+               r(dfG2) =  15
+                 r(G2) =  28.84709655642655
+             r(se_rho) =  .0216340554169243
+                r(rho) =  .0064228196898266
+                  r(N) =  2778
+              r(sum_w) =  2778
+
+macros:
+               r(type) : "polychoric"
+
+matrices:
+                  r(R) :  4 x 4
+
+.         sum inc_cat health_share_qual health_share_priv health_rating;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     inc_cat |      4800    5.852708    2.176657          1          9
+health_sha~l |      2928    4.079918    1.016989          1          5
+health_sha~v |      2877    2.592979    1.082542          1          5
+health_rat~g |      2998    3.676117    1.040795          1          5
+
+.         polychoric inc_cat health_share_qual;
+
+Variables :  inc_cat health_share_qual
+Type :       polychoric
+Rho        = .17616901
+S.e.       = .02019792
+Goodness of fit tests:
+Pearson G2 = 28.667783, Prob( >chi2(31)) = .58653087
+LR X2      = 27.660684, Prob( >chi2(31)) = .63862332
+
+.     polychoric inc_cat health_share_priv;
+
+Variables :  inc_cat health_share_priv
+Type :       polychoric
+Rho        = .00869812
+S.e.       = .02043269
+Goodness of fit tests:
+Pearson G2 = 74.097413, Prob( >chi2(31)) = .00002174
+LR X2      = 75.495261, Prob( >chi2(31)) = .00001402
+
+.     polychoric inc_cat health_rating;
+
+Variables :  inc_cat health_rating
+Type :       polychoric
+Rho        = .28452935
+S.e.       = .01876202
+Goodness of fit tests:
+Pearson G2 = 72.650664, Prob( >chi2(31)) = .00003405
+LR X2      = 74.598088, Prob( >chi2(31)) = .00001859
+
+.     polychoric health_rating health_share_qual;
+
+Variables :  health_rating health_share_qual
+Type :       polychoric
+Rho        = .07550253
+S.e.       = .02219514
+Goodness of fit tests:
+Pearson G2 = 24.719928, Prob( >chi2(15)) = .05383351
+LR X2      = 25.588382, Prob( >chi2(15)) = .04257832
+
+.     polychoric health_rating health_share_priv;
+
+Variables :  health_rating health_share_priv
+Type :       polychoric
+Rho        = .01537115
+S.e.       = .02138384
+Goodness of fit tests:
+Pearson G2 = 29.872175, Prob( >chi2(15)) = .01239086
+LR X2      = 29.539706, Prob( >chi2(15)) = .01369389
+
+.                 capture log close;
